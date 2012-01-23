@@ -1,0 +1,50 @@
+###################
+#### CHECKLIST ####
+###################
+checks:
+        LOGIN LINK: 
+           - check_http_url
+           - http://myservice.mydomain.tld/index.php?23232323
+                
+        mx_host_check_echo: 
+           - check_connectivity
+           - 192.168.0.23
+           - echo          
+           
+        webserver_http_check:
+           - check_connectivity
+           - 192.168.0.55
+           - www
+           
+
+##################
+##### CONFIG #####
+##################
+iterations: 1
+
+# ss7 gw:
+# note - for different sms gateways you'll probably have to adapt io/alerting.rb
+ss7-gw:
+        id: 00000
+        pass: xxxxx
+        sender: EMI
+        hlr-api: http://gateway.any-sms.biz/send_hlr.php
+        sms-api: http://gateway.any-sms.biz/send_sms.php
+        msin: 0000000000000
+        
+# mail gw:
+mail-gw: 
+        host: 127.0.0.1
+        user: false
+        pass: false
+        sender_domain: yourdomain.tld
+        sender: emi@yourdomain.tld
+        recipient: you@yourdomain.tld
+        message_body: |
+             From: External Infrastructure Monitor <emi@yourdomain.tld>
+             To: Jane Doe <you@yourdomain.tld>
+             Subject: EMI Alert
+             You have recieved an error notification, please resolve this issue.
+             
+             error:
+                      

@@ -1,0 +1,5 @@
+README:
+* this script is intended to run offsite (vserver/dedicated/..) as a replacement for alerting services like internetvista.com
+* install a cronjob and edit the config.yaml.default (mv to config.yaml).
+* (more to come?)
+* BSD LICENSED
