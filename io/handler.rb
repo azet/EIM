@@ -20,6 +20,6 @@ def err(e, param)
 	return puts $ret_line + e, $0.col_status + ' => ' + 'error: '.col_red + e.to_s.col_red_bg
 ensure
  	puts $ret_line + 'alerting'.col_red_bg
-	send_sms(e.to_s, param.to_s)
-	send_mail(e.to_s, param.to_s)
+	#send_sms(e.to_s, param.to_s)
+	#send_mail(e.to_s, param.to_s)
 end
