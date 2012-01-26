@@ -44,8 +44,7 @@ rescue => e
 end until i == list['iterations']
 
 begin
-    puts $ret_line + 'joining threads..'.col_status
     threads.each { |th| th.join }
 rescue => e
-    err('thread - ' + e, false)
+    err('thread exception - ' + e, false)
 end
