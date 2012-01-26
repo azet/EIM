@@ -16,10 +16,10 @@ $ret_line = 'EIM'.col_status + ' => '
 
 
 def err(e, param)
-	require 'io/alerting'
-	return puts $ret_line + e, $0.col_status + ' => ' + 'error: '.col_red + e.to_s.col_red_bg
+    require 'io/alerting'
+    return puts $ret_line + e, $0.col_status + ' => ' + 'error: '.col_red + e.to_s.col_red_bg
 ensure
- 	puts $ret_line + 'alerting'.col_red_bg
-	#send_sms(e.to_s, param.to_s)
-	#send_mail(e.to_s, param.to_s)
+     puts $ret_line + 'alerting'.col_red_bg
+    #send_sms(e.to_s, param.to_s)
+    #send_mail(e.to_s, param.to_s)
 end
