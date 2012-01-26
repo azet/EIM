@@ -23,10 +23,10 @@ begin
 			when 'check_http_url'
 				puts $ret_line + '>> - checking http(s) URL:'.col_status
 				puts $ret_line + name + ' -- ' + object[1]
-			  	threads << Thread.new {
-					require 'check_http_url'
-	  				check_http_url(object[1])
-	       			}
+			  threads << Thread.new {
+				  require 'check_http_url'
+          check_http_url(object[1])
+	      }
 			when 'check_connectivity'
 				puts $ret_line + '>> - checking connectivity of:'.col_status
 				puts $ret_line + name + ' -- ' + object[1] + ':' + object[2]
