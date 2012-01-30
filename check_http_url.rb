@@ -12,9 +12,10 @@ def check_http_url(url)
     begin
         basic_auth = url.split('@').first.split('//').last.split(':') if url =~ /@/
         url =~ /@/ ? match = open(url, :http_basic_authentication=>[basic_auth[0], basic_auth[1]]).read : match = open(url).read
-        if match.empty?
+        if match.empty? or match.nil?
             puts $ret_line + "LINK check '#{url}' - FAILED".col_red
-        else
+            raise 'link check failed..'
+        elsif match
             puts $ret_line + "LINK check" + " - OK".col_status
         end
     rescue => e
