@@ -45,13 +45,10 @@ begin
                 puts $ret_line + 'error: '.col_red + object[0].col_red_bg + ' <-- sorry, i dont know what to do with this..'.col_red
         end
     end
-    puts $ret_line + "<<--------------------[[[[ FINISHED ROUND ".col_status + i.to_s.col_blue + " ]]]]-------------------->>\n".col_status
-rescue => e
-    err('dispatcher - ' + e, false)
-end until i == list['iterations']
+    puts $ret_line + "<<------------[[[[ FINISHED ROUND ".col_status + i.to_s.col_blue + " ]]]]------------>>\n".col_status
 
-begin
-    threads.each { |th| th.join }
 rescue => e
-    err('thread exception - ' + e, false)
-end
+    err('dispatcher exception - ' + e, false)
+ensure
+    threads.each { |thread| thread.join }
+end until i == list['iterations']
