@@ -24,7 +24,7 @@ def check_http_redirect(url)
         url =~ /@/ ? match = open(url, :http_basic_authentication=>[basic_auth[0], basic_auth[1]]).read : match = open(url).read
         if match.empty? or match.nil?
             puts $ret_line + "REDIRECT check '#{url}' - FAILED".col_red
-            raise 'redirect failed..'
+            raise 'redirect check failed..'
         elsif match
             puts $ret_line + "REDIRECT check" + " - OK".col_status
         end
