@@ -14,19 +14,9 @@ class String
 end
 $ret_line = 'EIM'.col_status + ' => '
 
-require 'open-uri'
-def OpenURI.redirectable?(uri1, uri2) # :nodoc:
-    # This test is intended to forbid a redirection from http://... to
-    # file:///etc/passwd.
-    # However this is ad hoc.  It should be extensible/configurable.
-    uri1.scheme.downcase == uri2.scheme.downcase ||
-    (/\A(?:http|ftp|https)\z/i =~ uri1.scheme && /\A(?:http|ftp|https)\z/i =~ 
-uri2.scheme)
- end
-
 def err(e, param)
     require 'io/alerting'
-    return puts $ret_line + e, $0.col_status + ' -> ' + param + ' => ' + 'error: '.col_red + e.to_s.col_red_bg
+    return puts $ret_line + e, $0.col_status + ' => ' + param + ' --> ' + 'error: '.col_red + e.to_s.col_red_bg
 ensure
     puts $ret_line + 'alerting'.col_red_bg
     #send_sms(e.to_s, param.to_s)
