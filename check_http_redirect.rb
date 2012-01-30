@@ -26,7 +26,7 @@ def check_http_redirect(url)
             puts $ret_line + "REDIRECT check '#{url}' - FAILED".col_red
             raise 'redirect failed..'
         elsif match
-            puts $ret_line + "REDIRECT check '#{url}'" + " - OK".col_status
+            puts $ret_line + "REDIRECT check" + " - OK".col_status
         end
     rescue => e
         err(e, url)
