@@ -20,12 +20,12 @@ begin
     i += 1
     list['checks'].each do |name, val|
         case val[0]
-            when 'check_http_url', 'check_http_redirect'
+            when 'check_http', 'check_http_url', 'check_http_redirect'
                 puts $ret_line + '>> - checking URL:'.col_status
                 puts $ret_line + name + ' -- ' + val[1]
                 threads << Thread.new {
                     require 'check_http'
-                    val[0] = "check_http_url" ? check_http_url(val[1]) : check_http_redirect(val[1])
+                    check_http(val[1])
                 }
             when 'check_connectivity'
                 puts $ret_line + '>> - checking connectivity of:'.col_status
