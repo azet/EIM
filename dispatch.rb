@@ -18,31 +18,24 @@ Thread.abort_on_exception = true
 i = 0
 begin
     i += 1
-    list['checks'].each do |name, object|
-        case object[0]
-            when 'check_http_url'
-                puts $ret_line + '>> - checking http(s) URL:'.col_status
-                puts $ret_line + name + ' -- ' + object[1]
+    list['checks'].each do |name, val|
+        case val[0]
+            when 'check_http_url', 'check_http_redirect'
+                puts $ret_line + '>> - checking URL:'.col_status
+                puts $ret_line + name + ' -- ' + val[1]
                 threads << Thread.new {
-                    require 'check_http_url'
-                    check_http_url(object[1])
-                }
-            when 'check_http_redirect'
-                puts $ret_line + '>> - checking redirect of:'.col_status
-                puts $ret_line + name + ' -- ' + object[1]
-                threads << Thread.new {
-                    require 'check_http_redirect'
-                    check_http_redirect(object[1])
+                    require 'check_http'
+                    val[0] = "check_http_url" ? check_http_url(val[1]) : check_http_redirect(val[1])
                 }
             when 'check_connectivity'
                 puts $ret_line + '>> - checking connectivity of:'.col_status
-                puts $ret_line + name + ' -- ' + object[1] + ':' + object[2]
+                puts $ret_line + name + ' -- ' + val[1] + ':' + val[2]
                 threads << Thread.new {
                     require 'check_connectivity'
-                    check_connectivity(object[1], object[2])
+                    check_connectivity(val[1], val[2])
                 }
             else
-                puts $ret_line + 'error: '.col_red + object[0].col_red_bg + ' <-- sorry, i dont know what to do with this..'.col_red
+                puts $ret_line + 'error: '.col_red + val[0].col_red_bg + ' <-- sorry, i dont know what to do with this..'.col_red
         end
     end
     puts $ret_line + "<<------------[[[[ FINISHED ROUND ".col_status + i.to_s.col_blue + " ]]]]------------>>\n".col_status
