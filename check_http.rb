@@ -18,6 +18,21 @@ def OpenURI.redirectable?(uri1, uri2) # :nodoc:
     (/\A(?:http|ftp|https)\z/i =~ uri1.scheme && /\A(?:http|ftp|https)\z/i =~ uri2.scheme)
 end
 
+def check_http_url(url)    
+    begin
+        basic_auth = url.split('@').first.split('//').last.split(':') if url =~ /@/
+        url =~ /@/ ? match = open(url, :http_basic_authentication=>[basic_auth[0], basic_auth[1]]).read : match = open(url).read
+        if match.empty? or match.nil?
+            puts $ret_line + "LINK check '#{url}' - FAILED".col_red
+            raise 'link check failed..'
+        elsif match
+            puts $ret_line + "LINK check" + " - OK".col_status
+        end
+    rescue => e
+        err(e, url)
+    end
+end
+
 def check_http_redirect(url)    
     begin
         basic_auth = url.split('@').first.split('//').last.split(':') if url =~ /@/
