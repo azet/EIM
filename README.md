@@ -1,13 +1,14 @@
 README
 ======
 
-this script is intended to run offsite (vserver/dedicated/..) as a replacement for alerting services like internetvista.com
+this script is intended to run offsite (vserver/dedicated/..) as a replacement for alerting services like internetvista.com.
 it is a threaded ruby script. so far i've tested ~200 url/ping checks in under two seconds on a single core VM with 512mb ram.
+this readme file will (probably) be extended soon.
 
 
 requirements:
 -------------
-- ruby 1.8
+- ruby 1.8+
 - sendmail (or equivalent)
 - sms gateway (if needed)
 
@@ -25,13 +26,13 @@ todo:
 - error type in mail subjects
 - notification groups
 - anti spam functionality (in case of massive failure)
-- useful readme file
 - jruby support
 
 
 author:
 -------
-Aaron <azet> Zauner - azet@azet.org
+Aaron <azet> Zauner
+azet@azet.org
 
 
 licensing:
