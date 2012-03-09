@@ -15,8 +15,9 @@ it is a threaded ruby script. so far i've tested ~200 url/ping checks in under t
 
 todo:
 -----
-- error in mail subjects
-- different notification groups
+- error type in mail subjects
+- notification groups
+- anti spam functionality (in case of massive failure)
 - useful readme file
 - jruby support
 
