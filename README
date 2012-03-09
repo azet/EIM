@@ -1,5 +1,23 @@
 README:
-* this script is intended to run offsite (vserver/dedicated/..) as a replacement for alerting services like internetvista.com
-* install a cronjob and edit the config.yaml.default (mv to config.yaml).
-* (more to come?)
-* BSD LICENSED
+
+requirements:
+-------------
+- ruby 1.8
+- sendmail (or equivalent)
+- sms gateway (if needed)
+
+
+general info:
+-------------
+this script is intended to run offsite (vserver/dedicated/..) as a replacement for alerting services like internetvista.com
+it is a threaded ruby script. so far i've tested ~200 url/ping checks in under two seconds on a single core VM with 512mb ram.
+
+todo:
+-----
+- error in mail subjects
+- different notification groups
+- useful readme file
+
+licensing:
+----------
+see LICENSE
