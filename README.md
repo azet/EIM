@@ -20,6 +20,12 @@ setup:
 - install 'crontab' file
 
 
+misc.:
+------
+`ruby dispatch.rb | grep OK` will, of course, output all OK messages.
+`ruby dispatch.rb | egrep '(error|FAILURE)'` will output all errors.
+
+
 todo:
 -----
 - error type in mail subjects
