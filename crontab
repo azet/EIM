@@ -1,0 +1,5 @@
+##crontab to install
+
+#*/5 * * * * ( svn up /home/EIM/checks > /dev/null 2>&1 ) # or git pull..
+*/15 * * * * ( ntpdate -p 8 time.nist.gov pool.ntp.org > /dev/null 2>&1 )
+5,15,25,35,45,55 * * * * ( cd /home/EIM/checks &&  if [ ! `ruby dispatch.rb` ]; then echo 'checks ok'; else echo -e 'To: bofh@admin.com\nFrom: ext_monitoring.admin@admin.com\nSubject: monitoring cronjob failure on INSERT HOSTNAME\nBody:\n\nplease fix this immediately!' | /usr/sbin/sendmail -t; fi )
