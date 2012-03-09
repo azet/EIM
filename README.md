@@ -37,7 +37,7 @@ todo:
 
 author:
 -------
-Aaron <azet> Zauner
+Aaron Zauner
 azet@azet.org
 
 
