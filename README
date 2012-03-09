@@ -7,6 +7,14 @@ requirements:
 - sms gateway (if needed)
 
 
+setup:
+------
+- git clone
+- mv config.yaml.default config.yaml ; vi config.yaml
+- chmod +x dispatch.rb
+- install 'crontab' file
+
+
 general info:
 -------------
 this script is intended to run offsite (vserver/dedicated/..) as a replacement for alerting services like internetvista.com
