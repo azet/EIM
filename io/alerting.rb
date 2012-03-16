@@ -43,8 +43,9 @@ def send_mail(txt, param, name)
     begin
         Net::SMTP.start(config['mail-gw']['host'], 25, config['mail-gw']['sender_domain'], config['mail-gw']['user'], config['mail-gw']['pass']) do |smtp|
             body = config['mail-gw']['message_body'].gsub('%{alertname}', name), txt, ' -- err.: ', param
-            smtp.send_message body, config['mail-gw']['sender'].to_s, config['mail-gw']['recipient'].to_s
-            puts $ret_line + "sent alert mail to " + config['mail-gw']['recipient'] + " - OK".col_status
+            if smtp.send_message body, config['mail-gw']['sender'].to_s, config['mail-gw']['recipient'].to_s
+              puts $ret_line + "sent alert mail to " + config['mail-gw']['recipient'] + " - OK".col_status
+            end
         end
     rescue => mail_err
         puts $ret_line + "mail - FAILED! - ".col_red + mail_err
