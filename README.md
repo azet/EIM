@@ -29,7 +29,6 @@ misc.:
 
 todo:
 -----
-- error type in mail subjects
 - notification groups
 - anti spam functionality (in case of massive failure)
 - jruby support
