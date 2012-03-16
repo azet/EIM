@@ -45,6 +45,8 @@ def send_mail(txt, param, name)
             body = config['mail-gw']['message_body'].gsub('%{alertname}', name), txt, ' -- err.: ', param
             if smtp.send_message body, config['mail-gw']['sender'].to_s, config['mail-gw']['recipient'].to_s
               puts $ret_line + "sent alert mail to " + config['mail-gw']['recipient'] + " - OK".col_status
+            else
+              raise "can't send mail."
             end
         end
     rescue => mail_err
