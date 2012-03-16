@@ -8,7 +8,7 @@
 require 'io/handler' 
 require 'ping'
 
-def check_connectivity(host, service)
+def check_connectivity(name, host, service)
     begin
         ping = Ping.pingecho(host, 4, service)
         if ping
@@ -18,7 +18,7 @@ def check_connectivity(host, service)
             puts $ret_line + '..tracerouting..'.col_red
             traceroute=`which traceroute`.chomp
             exec=`#{traceroute} -n #{host}`
-            err('connectivity problem!', exec)
+            err('connectivity problem!', exec, name)
         end
     end
 end

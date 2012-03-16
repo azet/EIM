@@ -43,7 +43,7 @@ mail-gw:
         message_body: |
              From: External Infrastructure Monitor <emi@yourdomain.tld>
              To: Jane Doe <you@yourdomain.tld>
-             Subject: EMI Alert
+             Subject: EIM Alert - %{alertname}
              You have recieved an error notification, please resolve this issue.
              
              error:

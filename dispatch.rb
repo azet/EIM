@@ -25,14 +25,14 @@ begin
                 puts $ret_line + name + ' -- ' + val[1]
                 threads << Thread.new {
                     require 'check_http'
-                    check_http(val[1])
+                    check_http(name, val[1])
                 }
             when 'check_connectivity'
                 puts $ret_line + '>> - checking connectivity of:'.col_status
                 puts $ret_line + name + ' -- ' + val[1] + ':' + val[2]
                 threads << Thread.new {
                     require 'check_connectivity'
-                    check_connectivity(val[1], val[2])
+                    check_connectivity(name, val[1], val[2])
                 }
             else
                 puts $ret_line + 'error: '.col_red + val[0].col_red_bg + ' <-- sorry, i dont know what to do with this..'.col_red

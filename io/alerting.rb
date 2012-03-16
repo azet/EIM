@@ -34,7 +34,7 @@ end
     
 
 # SMTP Gateway:
-def send_mail(txt, param)
+def send_mail(txt, param, name)
     require 'net/smtp'
     require 'yaml'
     config = YAML.load_file 'config.yaml'
@@ -42,7 +42,7 @@ def send_mail(txt, param)
     puts $ret_line + "trying to send alert e-mail to ".col_blue + config['mail-gw']['recipient'].to_s.col_blue
     begin
         Net::SMTP.start(config['mail-gw']['host'], 25, config['mail-gw']['sender_domain'], config['mail-gw']['user'], config['mail-gw']['pass']) do |smtp|
-            body = config['mail-gw']['message_body'], txt, ' -- err.: ', param
+            body = config['mail-gw']['message_body'].gsub('%{alertname}', name), txt, ' -- err.: ', param
             smtp.send_message body, config['mail-gw']['sender'].to_s, config['mail-gw']['recipient'].to_s
             puts $ret_line + "sent alert mail to " + config['mail-gw']['recipient'] + " - OK".col_status
         end
