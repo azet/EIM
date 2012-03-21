@@ -14,7 +14,7 @@
 def get_notify_groups(checkname)
     unless result
         puts result = lambda {
-            config['checks'][%{checkname}]['notfiy'].each do |group|
+            config['checks'][#{checkname}]['notfiy'].each do |group|
                 puts groups
             end
             #config['notification-groups']
