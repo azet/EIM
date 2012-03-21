@@ -5,7 +5,7 @@
 #  descr_self:   HTTP(s) REDIRECT check
 #
 ########################################################################
-require 'io/handler'
+require 'lib/handler'
 require 'open-uri'
 
 # this is taken from the original ruby open-uri class,

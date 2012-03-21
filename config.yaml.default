@@ -23,7 +23,7 @@ checks:
 iterations: 1
 
 # ss7 gw:
-# note - for different sms gateways you'll probably have to adapt io/alerting.rb
+# note - for different sms gateways you'll probably have to adapt lib/alerting.rb
 ss7-gw:
         id: 00000
         pass: xxxxx

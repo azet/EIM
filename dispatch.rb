@@ -5,12 +5,13 @@
 #  descr_self:   Monitoring check Dispatcher
 #
 ########################################################################
-require 'io/handler'
 begin
+    # require local lib. && yaml
+    require 'lib/handler'
     require 'yaml'
     list = YAML.load_file 'config.yaml'
 rescue => e
-    err("can't load configuration file!", e)
+    err(e, "can't load configuration file!", 'yaml loader')
 end
 
 threads = []
@@ -35,13 +36,14 @@ begin
                     check_connectivity(name, val[1], val[2])
                 }
             else
-                puts $ret_line + 'error: '.col_red + val[0].col_red_bg + ' <-- sorry, i dont know what to do with this..'.col_red
+                puts $ret_line + 'error: '.col_red + val[0].col_red_bg,
+                ' <-- sorry, i dont know what to do with this..'.col_red
         end
     end
     puts $ret_line + "<<------------[[[[ FINISHED ROUND ".col_status + i.to_s.col_blue + " ]]]]------------>>\n".col_status
 
 rescue => e
-    err('dispatcher exception - ' + e, false)
+    err(e, 'dispatcher exception', 'dispatcher')
 ensure
     threads.each { |thread| thread.join }
 end until i == list['iterations']

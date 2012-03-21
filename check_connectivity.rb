@@ -5,7 +5,7 @@
 #  descr_self:   ping & traceroute wrapper
 #
 ########################################################################
-require 'io/handler' 
+require 'lib/handler' 
 require 'ping'
 
 def check_connectivity(name, host, service)

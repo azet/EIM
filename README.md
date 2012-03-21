@@ -20,15 +20,21 @@ setup:
 - chmod +x dispatch.rb
 - install 'crontab' file
 
+please feel informed that YAML is pretty strict on whitespaces (test your configuration before you deploy it).
+
 
 misc.:
 ------
 `ruby dispatch.rb | grep OK` will, of course, output all OK messages.
+
 `ruby dispatch.rb | egrep '(error|FAILURE)'` will output all errors.
+
+XXX code comments are todo/bugs.
 
 
 todo:
 -----
+
 - notification groups
 - anti spam functionality (in case of massive failure)
 - jruby support

@@ -3,11 +3,27 @@
 #
 #  developer:    aaron.zauner@emarsys.com
 #  descr_self:   Alerting..
+#                * Notification Groups
 #                * SMS/HLR Gateway 
 #                 (http://en.wikipedia.org/wiki/Mobile_Application_Part)
 #                * SMTP Alerting via Gateway / Server
 #
 ########################################################################
+
+# get notfiy group for alert:
+def get_notify_groups(checkname)
+    unless result
+        puts result = lambda {
+            config['checks'][%{checkname}]['notfiy'].each do |group|
+                puts groups
+            end
+            #config['notification-groups']
+        }
+    else
+        puts $ret_line + "no result".col_red
+    end
+end
+
 
 # SMS/HLR Gateway:
 def send_sms(txt, param)

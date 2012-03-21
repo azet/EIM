@@ -14,8 +14,12 @@ class String
 end
 $ret_line = 'EIM'.col_status + ' => '
 
+#throw/raise an error, supply:
+# 1. error
+# 2. optional text/message
+# 3. name of affected parent/check
 def err(e, param, name)
-    require 'io/alerting'
+    require 'lib/alerting'
     return puts $ret_line + e, $0.col_status + ' => ' + param + ' --> ' + 'error: '.col_red + e.to_s.col_red_bg
 ensure
     puts $ret_line + 'alerting'.col_red_bg
