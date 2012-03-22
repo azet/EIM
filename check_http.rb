@@ -20,15 +20,16 @@ end
 
 def check_http(name, url)    
     begin
-        basic_auth = url.split('@').first.split('//').last.split(':') if url =~ /@/
-        url =~ /@/ ? match = open(url, :http_basic_authentication=>[basic_auth[0], basic_auth[1]]).read : match = open(url).read
-        if match.empty? or match.nil?
-            puts $ret_line + "URL check '#{url}' - FAILED".col_red
-            raise 'url check failed..'
-        elsif match
-            puts $ret_line + "URL check" + " - OK".col_status
-        end
-    rescue => e
+    #    basic_auth = url.split('@').first.split('//').last.split(':') if url =~ /@/
+    #    url =~ /@/ ? match = open(url, :http_basic_authentication=>[basic_auth[0], basic_auth[1]]).read : match = open(url).read
+    #    if match.empty? or match.nil?
+    #        puts $ret_line + "URL check '#{url}' - FAILED".col_red
+    #        raise 'url check failed..'
+    #    elsif match
+    #        puts $ret_line + "URL check" + " - OK".col_status
+    #    end
+    #rescue => e
+        e = "0"
         err(e, url, name)
     end
 end

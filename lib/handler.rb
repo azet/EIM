@@ -18,11 +18,11 @@ $ret_line = 'EIM'.col_status + ' => '
 # 1. error
 # 2. optional text/message
 # 3. name of affected parent/check
-def err(e, param, name)
+def err(e, msg, name)
     require 'lib/alerting'
-    return puts $ret_line + e, $0.col_status + ' => ' + param + ' --> ' + 'error: '.col_red + e.to_s.col_red_bg
+    return puts $ret_line + e, $0.col_status + ' => ' + msg + ' --> ' + 'error: '.col_red + e.to_s.col_red_bg
 ensure
     puts $ret_line + 'alerting'.col_red_bg
-    send_sms(e.to_s, param.to_s, name.to_s)
-    send_mail(e.to_s, param.to_s, name.to_s)
+    #  send_sms(e.to_s, msg.to_s, name)
+    send_mail(e.to_s, msg.to_s, name.to_s)
 end

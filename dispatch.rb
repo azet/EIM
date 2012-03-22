@@ -9,7 +9,7 @@ begin
     # require local lib. && yaml
     require 'lib/handler'
     require 'yaml'
-    list = YAML.load_file 'config.yaml'
+    $config = YAML.load_file 'config.yaml'
 rescue => e
     err(e, "can't load configuration file!", 'yaml loader')
 end
@@ -19,7 +19,7 @@ Thread.abort_on_exception = true
 i = 0
 begin
     i += 1
-    list['checks'].each do |name, val|
+    $config['checks'].each do |name, val| # XXX map/reduce!
         case val[0]
             when 'check_http', 'check_http_url', 'check_http_redirect'
                 puts $ret_line + '>> - checking URL:'.col_status
@@ -48,4 +48,4 @@ rescue => e
     err(e, 'dispatcher exception', 'dispatcher')
 ensure
     threads.each { |thread| thread.join }
-end until i == list['iterations']
+end until i == $config['iterations']
