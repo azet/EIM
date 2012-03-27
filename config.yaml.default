@@ -46,7 +46,6 @@ ss7-gw:
         sender: EMI
         hlr-api: http://gateway.any-sms.biz/send_hlr.php
         sms-api: http://gateway.any-sms.biz/send_sms.php
-        msin: 0000000000000
         
 # mail gw:
 mail-gw: 
@@ -55,7 +54,6 @@ mail-gw:
         pass: false
         sender_domain: yourdomain.tld
         sender: emi@yourdomain.tld
-        recipient: you@yourdomain.tld
         message_body: |
              From: External Infrastructure Monitor <emi@yourdomain.tld>
              To: Jane Doe <you@yourdomain.tld>
