@@ -12,7 +12,9 @@ class String
     def col_status; colorize(self, "\e[32m"); end
     def colorize(text, color_code)  "#{color_code}#{text}\e[0m" end
 end
-$ret_line = 'EIM'.col_status + ' => '
+
+require 'time'
+$ret_line = Time.now.utc.iso8601() + ' | ' + 'EIM'.col_status + ' => '
 
 #throw/raise an error, supply:
 # 1. error
@@ -23,6 +25,6 @@ def err(e, msg, name)
     return puts $ret_line + e, $0.col_status + ' => ' + msg + ' --> ' + 'error: '.col_red + e.to_s.col_red_bg
 ensure
     puts $ret_line + 'alerting'.col_red_bg
-    #  send_sms(e.to_s, msg.to_s, name)
+    send_sms(e.to_s, msg.to_s, name.to_s)
     send_mail(e.to_s, msg.to_s, name.to_s)
 end

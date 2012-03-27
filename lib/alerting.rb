@@ -5,46 +5,49 @@
 #  descr_self:   Alerting..
 #                * Notification Groups
 #                * SMS/HLR Gateway 
-#                 (http://en.wikipedia.org/wiki/Mobile_Application_Part)
+#                (http://en.wikipedia.org/wiki/Mobile_Application_Part)
 #                * SMTP Alerting via Gateway / Server
 #
 ########################################################################
 
-# get notfiy group for alert:
-def get_notify_groups(checkname, type)
-    puts $config['checks']checkname['notfiy']
-    result = nil
-    unless result
-        result = lambda {
-            $config['checks'][checkname]['notfiy']
-        }
-    else
-        puts $ret_line + "no result".col_red
+# get notfiy group and data for alert:
+def notify_groups(checkname)
+    result = []
+    groups = $config['checks'][checkname].find { |hash| hash['notify'] }
+    groups.each_value do
+        $config['notification-groups'].map { |x| result += x }
     end
-    puts result
+    return result
 end
 
 
 # SMS/HLR Gateway:
-def send_sms(txt, param)
+def send_sms(txt, param, name)    
     require 'cgi'
     require 'open-uri'
-    
-    get_notify_groups(name, 'msin')
 
     puts $ret_line + "trying to send alert short message to ".col_blue + $config['ss7-gw']['msin'].to_s.col_blue
-    auth_string_part = "?id=" + $config['ss7-gw']['id'].to_s + "&pass=" + $config['ss7-gw']['pass'].to_s + "&nummer=" + $config['ss7-gw']['msin'].to_s        
-    hlr = open($config['ss7-gw']['hlr-api'].to_s + auth_string_part + "&plus=1").read
-    if hlr =~ /err:0/
-        puts $ret_line + "hlr-lookup ok. phone is subscribed in telco network..".col_blue
-        sms = open($config['ss7-gw']['sms-api'].to_s + auth_string_part + "&absender=" + $config['ss7-gw']['sender'].to_s + "&text=" + CGI.escape(txt + ' -- err.: ' + param)).read
-        if sms =~ /err:0/
-            puts $ret_line + "alert sms sent to " + $config['ss7-gw']['msin'].to_s + " - OK".col_status
-        else
-            puts $ret_line + "alert sms - FAILED! - ".col_red + sms
+    begin
+        msin = notify_groups(name).delete_if { |x| x.nil? or not x["msin"] }
+        msin.each do |phoneno|
+            msin = phoneno["msin"]
+            auth_string_part = "?id=" + $config['ss7-gw']['id'].to_s + "&pass=" + $config['ss7-gw']['pass'].to_s + "&nummer=" + $config['ss7-gw']['msin'].to_s        
+            hlr = open($config['ss7-gw']['hlr-api'].to_s + auth_string_part + "&plus=1").read
+            if hlr =~ /err:0/
+                puts $ret_line + "hlr-lookup ok. phone is subscribed in telco network..".col_blue
+                sms = open($config['ss7-gw']['sms-api'].to_s + auth_string_part + "&absender=" + $config['ss7-gw']['sender'].to_s + "&text=" + CGI.escape(txt + ' -- err.: ' + param)).read
+                if sms =~ /err:0/
+                    puts $ret_line + "alert sms sent to " + $config['ss7-gw']['msin'].to_s + " - OK".col_status
+                else
+                    puts $ret_line + "alert sms - FAILED! - ".col_red + sms
+                end
+            else
+                puts $ret_line + "hlr-lookup - FAILED! - ".col_red + hlr
+            end
         end
-    else
-        puts $ret_line + "hlr-lookup - FAILED! - ".col_red + hlr
+    rescue => sms_err
+        puts $ret_line + "sms - FAILED! - ".col_red + sms_err
+        exit
     end
 end
     
@@ -53,16 +56,18 @@ end
 def send_mail(txt, param, name)
     require 'net/smtp'
 
-    get_notify_groups(name, 'mail')
-    
     puts $ret_line + "trying to send alert e-mail to ".col_blue + $config['mail-gw']['recipient'].to_s.col_blue
     begin
-        Net::SMTP.start($config['mail-gw']['host'], 25, $config['mail-gw']['sender_domain'], $config['mail-gw']['user'], $config['mail-gw']['pass']) do |smtp|
-            body = $config['mail-gw']['message_body'].gsub('%{alertname}', name), txt, ' -- err.: ', param
-            if smtp.send_message body, $config['mail-gw']['sender'].to_s, $config['mail-gw']['recipient'].to_s
-              puts $ret_line + "sent alert mail to " + $config['mail-gw']['recipient'] + " - OK".col_status
-            else
-              raise "can't send mail."
+        rcpt = notify_groups(name).delete_if { |x| x.nil? or not x["mail"] }
+        rcpt.each do |mailaddress|
+            rcpt = mailaddress["mail"]
+            Net::SMTP.start($config['mail-gw']['host'], 25, $config['mail-gw']['sender_domain'], $config['mail-gw']['user'], $config['mail-gw']['pass']) do |smtp|
+                body = $config['mail-gw']['message_body'].gsub('%{alertname}', name), txt, ' -- err.: ', param
+                if smtp.send_message body, $config['mail-gw']['sender'].to_s, rcpt.to_s
+                  puts $ret_line + "sent alert mail to " + $config['mail-gw']['recipient'] + " - OK".col_status
+                else
+                  raise "can't send mail."
+                end
             end
         end
     rescue => mail_err

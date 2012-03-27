@@ -22,6 +22,22 @@ checks:
 ##################
 iterations: 1
 
+# notification groups:
+# contact msin (phone no.) and mail address can be supplied
+# format ->
+# groupname:
+#     mail: somemail@mailhost.com
+#     msin: 4700234205
+#
+notification-groups:
+        admin:
+            mail: bofh@mailhost.com
+            msin: 23232323232323
+        support:
+            mail: support@bonzencompany.com
+            msin: 232323232323
+
+
 # ss7 gw:
 # note - for different sms gateways you'll probably have to adapt lib/alerting.rb
 ss7-gw:

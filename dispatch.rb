@@ -19,7 +19,7 @@ Thread.abort_on_exception = true
 i = 0
 begin
     i += 1
-    $config['checks'].each do |name, val| # XXX map/reduce!
+    $config['checks'].each do |name, val|
         case val[0]
             when 'check_http', 'check_http_url', 'check_http_redirect'
                 puts $ret_line + '>> - checking URL:'.col_status
