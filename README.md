@@ -35,7 +35,6 @@ XXX code comments are todo/bugs.
 todo:
 -----
 
-- notification groups
 - anti spam functionality (in case of massive failure)
 - jruby support
 
