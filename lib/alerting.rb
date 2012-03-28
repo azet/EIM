@@ -35,7 +35,7 @@ def send_sms(txt, param, name)
             hlr = open($config['ss7-gw']['hlr-api'].to_s + auth_string_part + "&plus=1").read
             if hlr =~ /err:0/
                 puts $ret_line + "hlr-lookup ok. phone is subscribed in telco network..".col_blue
-                sms = open($config['ss7-gw']['sms-api'].to_s + auth_string_part + "&absender=" + $config['ss7-gw']['sender'].to_s + "&text=" + CGI.escape(txt + ' -- err.: ' + param)).read
+                sms = open($config['ss7-gw']['sms-api'].to_s + auth_string_part + "&absender=" + $config['ss7-gw']['sender'].to_s + "&text=" + CGI.escape(name + ' ' + txt + ' -- err.: ' + param)).read
                 if sms =~ /err:0/
                     puts $ret_line + "alert sms sent to " + msin.to_s + " - OK".col_status
                 else
