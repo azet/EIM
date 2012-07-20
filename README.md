@@ -3,8 +3,8 @@ README
 
 this script is intended to run offsite (vserver/dedicated/..) as a replacement for alerting services like internetvista.com.
 it is a threaded ruby script. so far i've tested ~200 url/ping checks in under two seconds on a single core VM with 512mb ram.
-this readme file will (probably) be extended soon.
 
+this project is not actively developed anymore. contributions are welcome anyway, and will be added.
 
 requirements:
 -------------
